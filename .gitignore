@@ -17,3 +17,5 @@ out/
 *.iws
 *.iml
 /bin
+*.dat
+*.csv
