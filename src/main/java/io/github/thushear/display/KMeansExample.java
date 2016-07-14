@@ -1,24 +1,30 @@
-package io.github.thushear.clustering;
+package io.github.thushear.display;
 
-import org.apache.mahout.clustering.display.DisplayKMeans;
+import io.github.thushear.clustering.RandomPointsUtil;
 import org.apache.mahout.clustering.kmeans.Cluster;
 import org.apache.mahout.clustering.kmeans.KMeansClusterer;
 import org.apache.mahout.common.distance.EuclideanDistanceMeasure;
 import org.apache.mahout.math.Vector;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by kongming on 2016/7/13.
  */
-public class KMeansExample {
+public class KMeansExample extends DisplayClustering {
 
-
+    KMeansExample() {
+        this.initialize();
+        this.setTitle("k-Means Clusters (>" + (int) (significance * 100) + "% of population)");
+    }
     public static void main(String[] args) throws Exception {
 
         List<Vector> sampleData = new ArrayList<Vector>();
-
+        generateSamples(400,1,1,3);
+        generateSamples(300,1,0,0.5);
+        generateSamples(300,0,2,0.1);
         RandomPointsUtil.generateSamples(sampleData,400,1,1,3);
         RandomPointsUtil.generateSamples(sampleData,300,1,0,0.5);
         RandomPointsUtil.generateSamples(sampleData,300,0,2,0.1);
@@ -42,9 +48,15 @@ public class KMeansExample {
 
         }
 
-        DisplayKMeans.main(null);
+//        CLUSTERS.add(finalClusters.get(finalClusters.size() - 1));
+        new KMeansExample();
     }
 
-
+    // Override the paint() method
+    @Override
+    public void paint(Graphics g) {
+        plotSampleData((Graphics2D) g);
+        plotClusters((Graphics2D) g);
+    }
 
 }
